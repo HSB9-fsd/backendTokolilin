@@ -8,7 +8,8 @@ const createAccessToken = (payload) =>
 const verifyAccessToken = (access_token) =>
   jwt.verify(access_token, secretKey);
 
-  module.exports = {
-    createAccessToken,
-    verifyAccessToken,
-  };
+
+module.exports = {
+  createAccessToken,
+  verifyAccessToken,
+};
