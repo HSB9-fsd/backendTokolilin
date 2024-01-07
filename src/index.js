@@ -12,6 +12,10 @@ app.use(express.json());
 app.use(cors({ origin: true, credentials: true }));
 
 app.use('/api', Router);
-// app.use('/api/products', router);
+// app.get('/products', (req, res) => {
+//     res.json({
+//         message: 'contoh /products'
+//     })
+// })
 
 app.listen(process.env.SERVER_PORT, () => { console.log(`Server running on port ${process.env.SERVER_PORT}`) });
