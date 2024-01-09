@@ -10,7 +10,7 @@ const authentication = async (req, res, next) => {
         }
         let payload = verifyAccessToken(token)
         let data = await User.findByPk(payload.id)
-        // console.log(payload, '================ini dairi data');
+        // console.log(payload, '================ini dari data');
         if(!data){
             throw {name: "Not Login"}
         }
@@ -20,7 +20,7 @@ const authentication = async (req, res, next) => {
         }
         next()
     } catch (error) {
-        console.log(error);
+        next(error);
     }
 }
 

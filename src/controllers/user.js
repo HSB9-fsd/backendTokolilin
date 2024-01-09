@@ -7,7 +7,7 @@ class user {
     try {
       const { email, password, first_name, last_name, phone, avatar } =
         req.body;
-        console.log(req.body);
+        // console.log(req.body);
       const data = await User.create({
         email,
         password,
@@ -16,9 +16,13 @@ class user {
         phone,
         avatar,
       });
-      res.status(201).json(data);
+      
+      res.status(201).json({
+        message: "Berhasil Register User Baru",
+        data,
+      });
     } catch (error) {
-      console.log(error);
+      next(error)
     }
   }
 
@@ -52,11 +56,12 @@ class user {
         throw { name: "JsonWebTokenError" };
       }
       res.status(200).json({
+        message: "User Berhasil Login",
         access_token: token,
-        name: data.username,
+        name: data.first_name,
       });
     } catch (error) {
-      console.log(error);
+      next(error)
     }
   }
 }
