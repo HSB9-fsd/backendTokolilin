@@ -64,6 +64,28 @@ class user {
       next(error)
     }
   }
+
+  static async getOneUser(req, res, next) {
+    try {
+      const { id } = req.params;
+
+      const data = await User.findOne({
+        where: {
+          id,
+        },
+      });
+
+      if (!data) {
+        throw { name: "Id User Tidak Ditemukan" };
+      }
+      res.status(200).json({
+        message: "Berhasil Menampilkan Data User By Id",
+        data,
+      });
+    } catch (error) {
+      next(error)
+    }
+  }
 }
 
 module.exports = user;

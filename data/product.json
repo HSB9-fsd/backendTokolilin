@@ -1,0 +1,58 @@
+[
+  {
+    "id": "5f7a60f3-c6cd-484f-be3d-b7680726f81a",
+    "title": "Spiced Mint",
+    "price": 150000,
+    "quantity": 55,
+    "photo": "#link_Spiced Mint"
+  },
+  {
+    "id": "5f7a60f3-c6cd-484f-be3d-b7680726f91a",
+    "title": "Sweet Strawberry",
+    "price": 150000,
+    "quantity": 50,
+    "photo": "#link_Sweet Strawberry"
+  },
+  {
+    "id": "5f7a60f3-c6cd-484f-be3d-b7680726f92b",
+    "title": "Cool Blueberries",
+    "price": 150000,
+    "quantity": 25,
+    "photo": "#link_Cool Blueberries"
+  },
+  {
+    "id": "5f7a60f3-c6cd-484f-be3d-b7680726f93c",
+    "title": "Juicy Lemon",
+    "price": 150000,
+    "quantity": 40,
+    "photo": "#link_Juicy Lemon"
+  },
+  {
+    "id": "5f7a60f3-c6cd-484f-be3d-b7680726f94d",
+    "title": "Clean Lavender",
+    "price": 150000,
+    "quantity": 15,
+    "photo": "#link_Clean Lavender"
+  },
+  {
+    "id": "5f7a60f3-c6cd-484f-be3d-b7680726f95e",
+    "title": "Summer Cherries",
+    "price": 150000,
+    "quantity": 60,
+    "photo": "#link_Summer Cherries"
+  },
+  {
+    "id": "5f7a60f3-c6cd-484f-be3d-b7680726f96f",
+    "title": "Fragrant Cinnamon",
+    "price": 150000,
+    "quantity": 55,
+    "photo": "#link_Fragrant Cinnamon"
+  },
+  {
+    "id": "5f7a60f3-c6cd-484f-be3d-b7680726f97g",
+    "title": "Fresh Lemonade",
+    "price": 150000,
+    "quantity": 30,
+    "photo": "#link_Fresh Lemont"
+  }
+]

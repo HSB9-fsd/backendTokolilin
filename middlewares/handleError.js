@@ -39,6 +39,9 @@ const handleError = (err, req, res, next) => {
   } else if (err.name === "id Address Tidak Ditemukan") {
     code = 404;
     message = "id Address Tidak Ditemukan";
+  } else if (err.name === "id User Tidak Ditemukan") {
+    code = 404;
+    message = "id User Tidak Ditemukan";
   }
 
   // 401 dan 403

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "924481f4-03fe-4da4-a887-f89444cf75c8",
+    "email": "thor@odinson.com",
+    "password": "12345",
+    "first_name": "Thor",
+    "last_name": "Odinson",
+    "phone": "080809090707",
+    "avatar": "#link_photo"
+  },
+  {
+    "id": "924481f4-03fe-4da4-a887-f89444cf75c9",
+    "email": "patrick@star",
+    "password": "12345",
+    "first_name": "Patrick",
+    "last_name": "Star",
+    "phone": "0876543210",
+    "avatar": "#link_photo"
+  }
+]
