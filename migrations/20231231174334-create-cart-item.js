@@ -1,21 +1,21 @@
-'use strict';
+"use strict";
 const { DataTypes } = require("sequelize");
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Checkout_items', {
+    await queryInterface.createTable("Cart_items", {
       id: {
         allowNull: false,
-        unique:true,
+        unique: true,
         primaryKey: true,
         type: DataTypes.UUID,
-        defaultValue: () => uuidv4()
+        defaultValue: () => uuidv4(),
       },
-      product_id: {
+      cart_id: {
         type: Sequelize.UUID,
         references: {
-          model: "Products",
+          model: "Carts",
           key: "id",
         },
         onDelete: "cascade",
@@ -30,20 +30,33 @@ module.exports = {
         onDelete: "cascade",
         onUpdate: "cascade",
       },
+      product_id: {
+        type: Sequelize.UUID,
+        references: {
+          model: "Products",
+          key: "id",
+        },
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      },
       quantity: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+      },
+      checkout: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Checkout_items');
-  }
+    await queryInterface.dropTable("Cart_items");
+  },
 };

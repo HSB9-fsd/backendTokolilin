@@ -1,6 +1,6 @@
 "use strict";
 const { Model, DataTypes } = require("sequelize");
-const { v4: uuidv4 } = require('uuid');
+const { v4: uuidv4 } = require("uuid");
 module.exports = (sequelize, DataTypes) => {
   class Shipping extends Model {
     /**
@@ -10,15 +10,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Shipping.belongsTo(models.User, {
-        foreignKey: "user_id",
-      });
 
       Shipping.belongsTo(models.Address, {
         foreignKey: "address_id",
       });
 
-      Shipping.hasOne(models.Checkout_item, {
+      Shipping.hasMany(models.Cart_item, {
         foreignKey: "shipping_id",
       });
     }
@@ -31,8 +28,8 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         primaryKey: true,
       },
-      user_id: DataTypes.STRING,
-      address_id: DataTypes.STRING,
+
+      address_id: DataTypes.UUID,
       payment: DataTypes.STRING,
     },
     {

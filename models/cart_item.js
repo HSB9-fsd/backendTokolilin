@@ -1,6 +1,6 @@
 "use strict";
 const { Model, DataTypes } = require("sequelize");
-const { v4: uuidv4 } = require('uuid');
+const { v4: uuidv4 } = require("uuid");
 module.exports = (sequelize, DataTypes) => {
   class Cart_item extends Model {
     /**
@@ -17,6 +17,10 @@ module.exports = (sequelize, DataTypes) => {
       Cart_item.belongsTo(models.Product, {
         foreignKey: "product_id",
       });
+
+      Cart_item.belongsTo(models.Shipping, {
+        foreignKey: "shipping_id",
+      });
     }
   }
   Cart_item.init(
@@ -27,9 +31,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         primaryKey: true,
       },
-      cart_id: DataTypes.STRING,
-      product_id: DataTypes.STRING,
+      cart_id: DataTypes.UUID,
+      product_id: DataTypes.UUID,
       quantity: DataTypes.INTEGER,
+      shipping_id: DataTypes.UUID,
+      checkout: DataTypes.BOOLEAN,
     },
     {
       sequelize,

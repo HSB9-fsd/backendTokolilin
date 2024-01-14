@@ -1,26 +1,18 @@
-'use strict';
+"use strict";
 const { DataTypes } = require("sequelize");
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Shippings', {
+    await queryInterface.createTable("Shippings", {
       id: {
         allowNull: false,
-        unique:true,
+        unique: true,
         primaryKey: true,
         type: DataTypes.UUID,
-        defaultValue: () => uuidv4()
+        defaultValue: () => uuidv4(),
       },
-      user_id: {
-        type: Sequelize.UUID,
-        references: {
-          model: "Users",
-          key: "id",
-        },
-        onDelete: "cascade",
-        onUpdate: "cascade",
-      },
+
       address_id: {
         type: Sequelize.UUID,
         references: {
@@ -31,19 +23,19 @@ module.exports = {
         onUpdate: "cascade",
       },
       payment: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Shippings');
-  }
+    await queryInterface.dropTable("Shippings");
+  },
 };

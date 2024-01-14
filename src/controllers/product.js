@@ -1,5 +1,6 @@
 const { User, Product } = require("../../models/index");
 const { Op } = require("sequelize");
+const remove = require("../../helpers/multerRemove");
 
 class product {
   // GET ALL
@@ -35,7 +36,7 @@ class product {
         totalPage: totalPage,
       });
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
 
@@ -58,7 +59,7 @@ class product {
         dataProduct,
       });
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
 
@@ -71,7 +72,7 @@ class product {
         title,
         price,
         quantity,
-        photo,
+        photo: req.file ? req.file.path : "",
       });
 
       res.status(201).json({
@@ -79,7 +80,7 @@ class product {
         data,
       });
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
 
@@ -99,25 +100,25 @@ class product {
         throw { name: "Id Product Tidak Ditemukan" };
       }
 
-      await Product.update(
-        {
-          title,
-          price,
-          quantity,
-          photo,
+      let body = { title, price, quantity, photo };
+
+      if (req.file !== undefined && req.file !== null) {
+        // Assuming remove function is defined and working correctly
+        remove(data.photo);
+        body.photo = req.file.path || "";
+    }
+
+      await Product.update(body, {
+        where: {
+          id,
         },
-        {
-          where: {
-            id,
-          },
-        }
-      );
+      });
 
       res.status(200).json({
         message: "Berhasil Memperbaharui Data Product",
       });
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
 
@@ -136,6 +137,8 @@ class product {
         throw { name: "Id Product Tidak Ditemukan" };
       }
 
+      remove(data.photo);
+
       await Product.destroy({
         where: {
           id,
@@ -146,7 +149,7 @@ class product {
         message: "Berhasil Menghapus Data Product",
       });
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
 }
