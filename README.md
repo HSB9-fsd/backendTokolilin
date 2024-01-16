@@ -22,6 +22,10 @@ Seuaikan Isi dari .env dengan Konfigurasi yang ada di perangkat anda (jika digun
     DB_HOST="127.0.0.1"
     DB_DIALECT= "mysql"
 
+Jalankan perintah untuk reset
+
+    npm run reset
+
 Jalankan Perintah untuk mengenerate seeder ke database yang anda gunakan
 
     npm run seed
