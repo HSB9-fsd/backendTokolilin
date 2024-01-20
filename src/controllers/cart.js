@@ -1,13 +1,13 @@
-const { User, Address, Cart } = require("../../models/index");
+const {User, Address, Cart} = require("../../models/index");
 
 class cart {
   static async createCart(req, res, next) {
     try {
-      const { user_id } = req.body;
+      const {user_id, product_id} = req.body;
       // console.log(req.body);
       let dataUser = await User.findOne({
         where: {
-          id,
+          id: user_id,
         },
       });
       if (!dataUser) {
@@ -16,7 +16,8 @@ class cart {
         };
       }
       const data = await Cart.create({
-        user_id: id,
+        user_id,
+        product_id,
       });
       res.status(201).json({
         message: "Data Cart Berhasil Dibuat",
@@ -43,7 +44,7 @@ class cart {
 
   static async deleteCartById(req, res, next) {
     try {
-      const { id } = req.params;
+      const {id} = req.params;
 
       const dataCart = await Cart.findOne({
         where: {

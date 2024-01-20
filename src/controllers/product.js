@@ -1,12 +1,12 @@
-const { User, Product } = require("../../models/index");
-const { Op } = require("sequelize");
+const {User, Product} = require("../../models/index");
+const {Op} = require("sequelize");
 const remove = require("../../helpers/multerRemove");
 
 class product {
   // GET ALL
   static async getAllProduct(req, res, next) {
     try {
-      const { startPrice, endPrice, search, page, limit } = req.query;
+      const {startPrice, endPrice, search, page, limit} = req.query;
 
       let pagination = {
         limit: limit ? limit : 6,
@@ -43,7 +43,7 @@ class product {
   // GET ONE
   static async getOneProduct(req, res, next) {
     try {
-      const { id } = req.params;
+      const {id} = req.params;
 
       const dataProduct = await Product.findOne({
         where: {
@@ -52,7 +52,7 @@ class product {
       });
 
       if (!dataProduct) {
-        throw { name: "Id Product Tidak Ditemukan" };
+        throw {name: "Id Product Tidak Ditemukan"};
       }
       res.status(200).json({
         message: "Berhasil Menampilkan Data Product By Id",
@@ -66,13 +66,18 @@ class product {
   // CREATE
   static async createProduct(req, res, next) {
     try {
-      const { title, price, quantity, photo } = req.body;
+      const {title, price, quantity} = req.body;
+
+      const filename = req.file.filename;
+      const newFile =
+        req.protocol + "://" + req.get("host") + "/photo/" + filename;
 
       const data = await Product.create({
+        photo: newFile,
         title,
         price,
         quantity,
-        photo: req.file ? req.file.path : "",
+        // photo: req.file ? req.file.path : "",
       });
 
       res.status(201).json({
@@ -87,8 +92,8 @@ class product {
   // UPDATE
   static async updateProduct(req, res, next) {
     try {
-      const { id } = req.params;
-      const { title, price, quantity, photo } = req.body;
+      const {id} = req.params;
+      const {title, price, quantity, photo} = req.body;
 
       const data = await Product.findOne({
         where: {
@@ -97,16 +102,22 @@ class product {
       });
 
       if (!data) {
-        throw { name: "Id Product Tidak Ditemukan" };
+        throw {name: "Id Product Tidak Ditemukan"};
       }
 
-      let body = { title, price, quantity, photo };
+      let body = {title, price, quantity, photo};
 
       if (req.file !== undefined && req.file !== null) {
         // Assuming remove function is defined and working correctly
         remove(data.photo);
-        body.photo = req.file.path || "";
-    }
+
+        const {filename} = req.file;
+        const newFile =
+          req.protocol + "://" + req.get("host") + "/photo/" + filename;
+
+        // body.photo = req.file.path || "";
+        body.photo = newFile;
+      }
 
       await Product.update(body, {
         where: {
@@ -125,7 +136,7 @@ class product {
   // DELETE
   static async deleteProduct(req, res, next) {
     try {
-      const { id } = req.params;
+      const {id} = req.params;
 
       const data = await Product.findOne({
         where: {
@@ -134,7 +145,7 @@ class product {
       });
 
       if (!data) {
-        throw { name: "Id Product Tidak Ditemukan" };
+        throw {name: "Id Product Tidak Ditemukan"};
       }
 
       remove(data.photo);

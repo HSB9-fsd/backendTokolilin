@@ -1,6 +1,6 @@
 "use strict";
-const { Model, DataTypes } = require("sequelize");
-const { v4: uuidv4 } = require("uuid");
+const {Model, DataTypes} = require("sequelize");
+const {v4: uuidv4} = require("uuid");
 module.exports = (sequelize, DataTypes) => {
   class Cart extends Model {
     /**
@@ -13,6 +13,9 @@ module.exports = (sequelize, DataTypes) => {
       Cart.hasMany(models.Cart_item, {
         foreignKey: "product_id",
       });
+      Cart.hasMany(models.Product, {
+        foreignKey: "id",
+      });
     }
   }
   Cart.init(
@@ -24,6 +27,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
       },
       user_id: DataTypes.UUID,
+      product_id: DataTypes.UUID,
     },
     {
       sequelize,
