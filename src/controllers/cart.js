@@ -3,7 +3,7 @@ const {User, Address, Cart} = require("../../models/index");
 class cart {
   static async createCart(req, res, next) {
     try {
-      const {user_id, product_id} = req.body;
+      const {user_id, product_id, quantity} = req.body;
       // console.log(req.body);
       let dataUser = await User.findOne({
         where: {
@@ -18,6 +18,7 @@ class cart {
       const data = await Cart.create({
         user_id,
         product_id,
+        quantity,
       });
       res.status(201).json({
         message: "Data Cart Berhasil Dibuat",
