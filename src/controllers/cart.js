@@ -1,4 +1,4 @@
-const {User, Address, Cart} = require("../../models/index");
+const {User, Address, Cart, Product} = require("../../models/index");
 
 class cart {
   static async createCart(req, res, next) {
@@ -39,6 +39,58 @@ class cart {
       }
       res.status(201).json(data);
     } catch (error) {
+      next(error);
+    }
+  }
+
+  static async readCartByUserId(req, res, next) {
+    try {
+      const userId = req.params.id;
+
+      // if (userId) {
+      //   return res.json("Data Cart Tidak Ditemukan");
+      // }
+
+      const allData = await Cart.findAll({
+        where: {
+          user_id: userId,
+        },
+      });
+
+      const newCartData = [];
+
+      for (const oneData of allData) {
+        const productData = await Product.findOne({
+          where: {
+            id: oneData.product_id,
+          },
+        });
+
+        if (!productData) {
+          throw {
+            name: "Data Produk Tidak Ditemukan",
+          };
+        }
+
+        const newCart = {
+          id: oneData.id,
+          user_id: oneData.user_id,
+          product_id: productData,
+          quantity: oneData.quantity,
+        };
+
+        newCartData.push(newCart);
+      }
+
+      if (!newCartData) {
+        throw {
+          name: "Data Cart Masih Kosong",
+        };
+      }
+
+      res.status(200).json(newCartData);
+    } catch (error) {
+      console.error(error.message);
       next(error);
     }
   }

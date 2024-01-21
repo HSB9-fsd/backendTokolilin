@@ -1,10 +1,9 @@
 "use strict";
 const {DataTypes} = require("sequelize");
-
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Shippings", {
+    await queryInterface.createTable("Chackout_items", {
       id: {
         allowNull: false,
         unique: true,
@@ -12,26 +11,22 @@ module.exports = {
         type: DataTypes.UUID,
         defaultValue: () => uuidv4(),
       },
-      user_id: {
+      product_id: {
         type: Sequelize.UUID,
         references: {
-          model: "Users",
-          key: "id",
+          model: "Products",
+          keys: "id",
         },
-        onDelete: "cascade",
-        onUpdate: "cascade",
       },
-      address_id: {
+      shipping_id: {
         type: Sequelize.UUID,
         references: {
-          model: "Addresses",
-          key: "id",
+          model: "Shippings",
+          keys: "id",
         },
-        onDelete: "cascade",
-        onUpdate: "cascade",
       },
-      payment: {
-        type: Sequelize.STRING,
+      quantity: {
+        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,
@@ -44,6 +39,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Shippings");
+    await queryInterface.dropTable("Chackout_items");
   },
 };

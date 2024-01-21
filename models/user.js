@@ -1,7 +1,7 @@
 "use strict";
-const { Model, DataTypes } = require("sequelize");
-const { v4: uuidv4 } = require("uuid");
-const { hashingPassword } = require("../helpers/bcrypt");
+const {Model, DataTypes} = require("sequelize");
+const {v4: uuidv4} = require("uuid");
+const {hashingPassword} = require("../helpers/bcrypt");
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -14,8 +14,10 @@ module.exports = (sequelize, DataTypes) => {
       User.hasOne(models.Cart, {
         foreignKey: "user_id",
       });
-
       User.hasOne(models.Address, {
+        foreignKey: "user_id",
+      });
+      User.hasOne(models.Shipping, {
         foreignKey: "user_id",
       });
     }
