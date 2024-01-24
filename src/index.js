@@ -8,10 +8,10 @@ const handleError = require("../middlewares/handleError");
 
 const app = express();
 
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use(cors({origin: true, credentials: true}));
+app.use(cors({ origin: true, credentials: true }));
 
 app.use(express.static(path.join("upload")));
 

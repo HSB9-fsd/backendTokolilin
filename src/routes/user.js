@@ -10,5 +10,7 @@ router.get("/", authentication, user.getAllUser);
 router.get("/:id", authentication, user.getOneUser);
 router.post("/register", avatar.single("avatar"), user.register);
 router.post("/login", user.login);
+router.patch("/:id", avatar.single("avatar"), user.updateUser);
+// router.delete("/delete", user.deleteUser);
 
 module.exports = router;

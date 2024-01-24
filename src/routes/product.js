@@ -9,12 +9,7 @@ const router = express.Router();
 router.get("/", product.getAllProduct);
 router.get("/:id", product.getOneProduct);
 router.post("/", authentication, photo.single("photo"), product.createProduct);
-router.patch(
-  "/:id",
-  authentication,
-  photo.single("photo"),
-  product.updateProduct
-);
+router.patch("/:id", authentication, photo.single("photo"), product.updateProduct);
 router.delete("/:id", authentication, product.deleteProduct);
 
 module.exports = router;
