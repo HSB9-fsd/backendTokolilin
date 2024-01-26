@@ -100,9 +100,10 @@ class address {
 
   static async createShipping(req, res, next) {
     try {
-      const {address_id, user_id, payment, products_datas, quantity} = req.body;
+      const { address_id, user_id, payment, products_datas, quantity } =
+        req.body;
 
-      console.log("ini adalah data", req.body);
+      // console.log("ini adalah data", req.body);
 
       let body = {
         payment,
@@ -153,8 +154,8 @@ class address {
 
   static async updateShippingById(req, res, next) {
     try {
-      const {id} = req.params;
-      const {payment} = req.body;
+      const { id } = req.params;
+      const { payment } = req.body;
 
       await Shipping.update(
         {
@@ -177,7 +178,7 @@ class address {
 
   static async deleteShippingById(req, res, next) {
     try {
-      const {id} = req.params;
+      const { id } = req.params;
 
       const dataShipping = await Shipping.findOne({
         where: {
