@@ -6,9 +6,11 @@ const avatar = upload();
 
 const router = express.Router();
 
+router.get("/profile", authentication, user.getOneUser);
 router.get("/", authentication, user.getAllUser);
-router.get("/:id", authentication, user.getOneUser);
 router.post("/register", avatar.single("avatar"), user.register);
 router.post("/login", user.login);
+router.patch("/password/:id", authentication, user.updatePassword);
+router.patch("/:id", authentication, avatar.single("avatar"), user.updateUser);
 
 module.exports = router;
