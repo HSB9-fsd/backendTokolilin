@@ -1,7 +1,6 @@
+const snap = require("../../helpers/midtrans");
 const {
-  User,
   Address,
-  Cart,
   Shipping,
   Product,
   Chackout_item,
@@ -100,15 +99,14 @@ class address {
 
   static async createShipping(req, res, next) {
     try {
-      const {address_id, user_id, payment, products_datas, quantity} = req.body;
+      const {address_id, user_id, payment} = req.body;
 
-      console.log("ini adalah data", req.body);
-
+      const products_datas = req.body.products_datas || [];
+      let tokens = [];
+      let totalGrossAmount = 0;
       let body = {
         payment,
       };
-
-      Chackout_item;
 
       if (address_id) {
         let dataAddress = await Address.findOne({
@@ -127,23 +125,52 @@ class address {
       }
 
       const createdShipping = await Shipping.create(body);
-
       if (createdShipping.id) {
-        const checkoutItemData = products_datas.map(async (item) => {
-          await Chackout_item.create({
-            id: crypto.randomUUID(),
-            shipping_id: createdShipping.id,
-            product_id: item,
-            quantity,
+        let itemDetails = [];
+        let quantities = req.body.quantity || [];
+        for (let i = 0; i < products_datas.length; i++) {
+          const item = products_datas[i];
+          const productInfo = await Product.findOne({
+            where: {
+              id: item,
+            },
           });
-        });
 
-        await Promise.all(checkoutItemData);
+          if (productInfo) {
+            const itemQuantity = quantities[i] || 1;
+            await Chackout_item.create({
+              id: crypto.randomUUID(),
+              shipping_id: createdShipping.id,
+              product_id: item,
+              quantity: itemQuantity,
+            });
+
+            let itemDetail = {
+              name: productInfo.title,
+              price: productInfo.price,
+              quantity: itemQuantity,
+            };
+
+            itemDetails.push(itemDetail);
+            totalGrossAmount += productInfo.price * itemQuantity;
+          }
+        }
+
+        let parameters = {
+          item_details: itemDetails,
+          transaction_details: {
+            order_id: crypto.randomUUID(),
+            gross_amount: totalGrossAmount,
+          },
+        };
+
+        const token = await snap.createTransactionToken(parameters);
+        tokens.push(token);
       }
-
       res.status(201).json({
         message: "Data Shipping Berhasil Dibuat",
         createdShipping,
+        tokens: tokens[0],
       });
     } catch (error) {
       console.error(error.message);
