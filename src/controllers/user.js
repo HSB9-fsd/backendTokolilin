@@ -68,7 +68,6 @@ class user {
 
       res.status(200).json({
         message: "User Berhasil Login",
-        id: data.id,
         name: data.first_name,
         access_token: token,
       });
